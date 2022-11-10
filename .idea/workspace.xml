@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5949f5a3-5542-47c8-a6f4-09dfb5defab9" name="Changes" comment="Done spring config with dependency injection">
+    <list default="true" id="5949f5a3-5542-47c8-a6f4-09dfb5defab9" name="Changes" comment="Test project">
       <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/.idea/checkstyle-idea.xml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/.idea/dbnavigator.xml" afterDir="false" />
@@ -163,7 +163,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Done spring config with dependency injection" />
-    <option name="LAST_COMMIT_MESSAGE" value="Done spring config with dependency injection" />
+    <MESSAGE value="Test project" />
+    <option name="LAST_COMMIT_MESSAGE" value="Test project" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
