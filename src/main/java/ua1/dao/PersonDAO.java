@@ -37,4 +37,9 @@ public class PersonDAO {
         personToBeUpdated.setEmail(person.getEmail());
         personToBeUpdated.setName(person.getName());
     }
+
+    public void delete(int id) {
+        people.removeIf(p -> p.getId() == id);
+        PEOPLE_COUNT--;
+    }
 }
