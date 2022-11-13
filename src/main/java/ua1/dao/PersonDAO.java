@@ -1,45 +1,42 @@
 package ua1.dao;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import ua1.models.Person;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Component
 public class PersonDAO {
-    private static int PEOPLE_COUNT;
-    private final List<Person> people;
+    private final JdbcTemplate jdbcTemplate;
 
-    {
-        people = new ArrayList<>();
-        people.add(new Person(++PEOPLE_COUNT, "Dima", 18, "ema@ff"));
-        people.add(new Person(++PEOPLE_COUNT, "Stas", 14, "dsd@b"));
-        people.add(new Person(++PEOPLE_COUNT, "Sasha", 19, "a@gmail.com"));
+    @Autowired
+    public PersonDAO(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
     }
 
     public List<Person> index() {
-        return people;
+        return jdbcTemplate.query("select * from information_schema.person", new BeanPropertyRowMapper<>(Person.class));
     }
 
     public Person show(int id) {
-        return people.stream().filter(person -> person.getId() == id).findAny().orElse(null);
+        return jdbcTemplate.query("select * from information_schema.person where id=?", new Object[]{id},
+                new BeanPropertyRowMapper<>(Person.class)).stream().findAny().orElse(null);
+
     }
 
     public void save(Person person) {
-        person.setId(++PEOPLE_COUNT);
-        people.add(person);
+        jdbcTemplate.update("insert into information_schema.person values(1, ?, ?, ?)", person.getName(), person.getAge(), person.getEmail());
     }
 
     public void update(int id, Person person) {
-        Person personToBeUpdated = show(id);
-        personToBeUpdated.setAge(person.getAge());
-        personToBeUpdated.setEmail(person.getEmail());
-        personToBeUpdated.setName(person.getName());
+        jdbcTemplate.update("update information_schema.person set name=?, age=?, email=? where id=?", person.getName(), person.getAge(), person.getEmail(), id);
+
     }
 
     public void delete(int id) {
-        people.removeIf(p -> p.getId() == id);
-        PEOPLE_COUNT--;
+        jdbcTemplate.update("delete from information_schema.person where id=?", id);
     }
 }
