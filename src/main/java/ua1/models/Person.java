@@ -8,10 +8,8 @@ import lombok.Setter;
 import org.hibernate.validator.constraints.Range;
 import org.hibernate.validator.constraints.UniqueElements;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
+import javax.validation.Valid;
+import javax.validation.constraints.*;
 
 @Getter
 @Setter
@@ -19,12 +17,12 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 public class Person {
     private int id;
-    @NotEmpty(message = "Name should be not empty")
-    @Size(min = 2, max = 30)
+    @Valid
+    @Pattern(regexp = "[A-Z]\\w+\\s[A-Z]\\w+\\s[A-Z]\\w+", message = "Enter right your name surname and ???")
     private String name;
-    @Min(value = 1,message = "Age should be greater than 1")
-    private int age;
-    @NotEmpty(message = "Email should be not empty")
-    @Email(message = "Email should be valid")
-    private String email;
+//    @Min(value = 1,message = "Age should be greater than 1")
+//    private int age;
+//    @NotEmpty(message = "Email should be not empty")
+//    @Email(message = "Email should be valid")
+//    private String email;
 }

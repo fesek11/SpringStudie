@@ -18,25 +18,25 @@ public class PersonDAO {
     }
 
     public List<Person> index() {
-        return jdbcTemplate.query("select * from information_schema.person", new BeanPropertyRowMapper<>(Person.class));
+        return jdbcTemplate.query("select * from public.person", new BeanPropertyRowMapper<>(Person.class));
     }
 
     public Person show(int id) {
-        return jdbcTemplate.query("select * from information_schema.person where id=?", new Object[]{id},
+        return jdbcTemplate.query("select * from public.person where id=?", new Object[]{id},
                 new BeanPropertyRowMapper<>(Person.class)).stream().findAny().orElse(null);
 
     }
 
     public void save(Person person) {
-        jdbcTemplate.update("insert into information_schema.person values(1, ?, ?, ?)", person.getName(), person.getAge(), person.getEmail());
+        jdbcTemplate.update("insert into public.person(name) values(?)",    person.getName());
     }
 
     public void update(int id, Person person) {
-        jdbcTemplate.update("update information_schema.person set name=?, age=?, email=? where id=?", person.getName(), person.getAge(), person.getEmail(), id);
+        jdbcTemplate.update("update public.person set name=? where id=?", person.getName(), id);
 
     }
 
     public void delete(int id) {
-        jdbcTemplate.update("delete from information_schema.person where id=?", id);
+        jdbcTemplate.update("delete from public.person where id=?", id);
     }
 }
