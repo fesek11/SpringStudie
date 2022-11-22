@@ -4,21 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5949f5a3-5542-47c8-a6f4-09dfb5defab9" name="Changes" comment="Added jdbc driver">
-      <change beforePath="$PROJECT_DIR$/.idea/dbnavigator.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dbnavigator.xml" afterDir="false" />
+    <list default="true" id="5949f5a3-5542-47c8-a6f4-09dfb5defab9" name="Changes" comment="Project 1">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ua1/config/SpringConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua1/config/SpringConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ua1/controllers/HelloController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ua1/dao/PersonDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua1/dao/PersonDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ua1/dao/PersonMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua1/dao/PersonMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ua1/models/Book.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua1/models/Book.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ua1/models/Person.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua1/models/Person.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/database.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/database.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/people/edit.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/people/edit.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/people/hello_world.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/people/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/people/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/people/new.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/people/new.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/people/show.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/people/show.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ua1/controllers/PeopleController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua1/controllers/PeopleController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -175,7 +163,14 @@
       <option name="project" value="LOCAL" />
       <updated>1668371278094</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Project 1">
+      <created>1669058324262</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1669058324262</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -193,7 +188,8 @@
     <MESSAGE value="Done spring config with dependency injection" />
     <MESSAGE value="Test project" />
     <MESSAGE value="Added jdbc driver" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added jdbc driver" />
+    <MESSAGE value="Project 1" />
+    <option name="LAST_COMMIT_MESSAGE" value="Project 1" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
