@@ -45,4 +45,9 @@ public class BookDAO {
     public void appoint(int id, int idPerson) {
         jdbcTemplate.update("update public.book set person_id=? where book_id=?", idPerson, id);
     }
+
+    public boolean booked(int id) {
+        return jdbcTemplate.query("select person_id from public.book where book_id=?", new Object[]{id}, new BeanPropertyRowMapper<>(Book.class)).isEmpty();
+    }
+
 }

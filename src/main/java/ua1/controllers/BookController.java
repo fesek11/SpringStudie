@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ua1.dao.BookDAO;
+import ua1.dao.PersonDAO;
 import ua1.models.Book;
 import ua1.models.Person;
 
@@ -16,6 +17,7 @@ import javax.validation.Valid;
 @AllArgsConstructor
 public class BookController {
     private final BookDAO bookDAO;
+    private final PersonDAO personDAO;
 
     @GetMapping()
     public String index(Model model) {
@@ -39,25 +41,33 @@ public class BookController {
     }
 
     @GetMapping("/{id}")
-    public String show(@PathVariable("id") int id, Model model) {
+    public String show(@ModelAttribute("person") Person person, @PathVariable("id") int id, Model model) {
+        if (!bookDAO.booked(id)) {
+            System.out.println("1");
+        } else {
+            System.out.println("0");
+        }
         model.addAttribute("book", bookDAO.show(id));
+        model.addAttribute("people", personDAO.index());
         return "book/show";
     }
+
     @DeleteMapping("/{id}")
     public String delete(@PathVariable("id") int id) {
         bookDAO.delete(id);
         return "redirect:/book";
     }
+
     @GetMapping("/{id}/edit")
     public String edit(Model model, @PathVariable("id") int id) {
         model.addAttribute("book", bookDAO.show(id));
         return "book/edit";
     }
 
-    @PatchMapping
-    public String appoint(Model model, @PathVariable("id") int id, @PathVariable("person") int idPerson) {
+    @PatchMapping("/appoint")
+    public String appoint(@PathVariable("id") int id, @PathVariable("person") int idPerson) {
         bookDAO.appoint(id, idPerson);
-        return "redirect:/person";
+        return "book/show";
     }
 
     @PatchMapping("/{id}")

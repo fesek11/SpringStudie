@@ -18,14 +18,12 @@ public class PeopleController {
 
     @GetMapping()
     public String index(Model model) {
-        //get all people from DAO
         model.addAttribute("people", personDAO.index());
         return "people/index";
     }
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model) {
-        //get exactly person via id from DAO
         model.addAttribute("person", personDAO.show(id));
         return "people/show";
     }

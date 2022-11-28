@@ -43,7 +43,9 @@ alter table book add column author varchar(100)
 
 select * from person
 
-select * from book]]></console>
+select * from book
+
+select person_id from public.book where book_id = 1]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
