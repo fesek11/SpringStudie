@@ -11,6 +11,7 @@ import ua1.models.Book;
 import ua1.models.Person;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/book")
@@ -41,15 +42,22 @@ public class BookController {
     }
 
     @GetMapping("/{id}")
-    public String show(@ModelAttribute("person") Person person, @PathVariable("id") int id, Model model) {
-        if (!bookDAO.booked(id)) {
-            System.out.println("1");
-        } else {
-            System.out.println("0");
-        }
+    public String show(@PathVariable("id") int id, Model model, @ModelAttribute("person") Person person) {
         model.addAttribute("book", bookDAO.show(id));
-        model.addAttribute("people", personDAO.index());
+
+        Optional<Person> personOwner = bookDAO.getBookOwner(id);
+        if (personOwner.isPresent()) {
+            model.addAttribute("owner", personOwner.get());
+        } else {
+            model.addAttribute("people", personDAO.index());
+        }
         return "book/show";
+    }
+
+    @PostMapping("/relies/{id}")
+    public String relies(@PathVariable("id") int id) {
+        bookDAO.relies(id);
+        return "redirect:/book";
     }
 
     @DeleteMapping("/{id}")
@@ -64,10 +72,10 @@ public class BookController {
         return "book/edit";
     }
 
-    @PatchMapping("/appoint")
-    public String appoint(@PathVariable("id") int id, @PathVariable("person") int idPerson) {
-        bookDAO.appoint(id, idPerson);
-        return "book/show";
+    @PatchMapping("/appoint/{id}")
+    public String appoint(@ModelAttribute(value = "person") Person person, @PathVariable(value = "id") int id) {
+        bookDAO.appoint(id, person.getId());
+        return "redirect:/book/" + id;
     }
 
     @PatchMapping("/{id}")

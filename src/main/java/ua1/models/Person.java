@@ -20,6 +20,9 @@ public class Person {
     @Valid
     @Pattern(regexp = "[A-Z]\\w+\\s[A-Z]\\w+\\s[A-Z]\\w+", message = "Enter right your name surname and ???")
     private String name;
+    public String getFullName() {
+        return getName();
+    }
 //    @Min(value = 1,message = "Age should be greater than 1")
 //    private int age;
 //    @NotEmpty(message = "Email should be not empty")

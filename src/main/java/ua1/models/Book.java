@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Pattern;
@@ -23,4 +22,9 @@ public class Book {
 
     @Min(value = 0, message = "Year should be greater than 0")
     private int year;
+
+
+    public String getFullName() {
+        return getAuthor() + ", " + getName() + ", " + getYear();
+    }
 }
