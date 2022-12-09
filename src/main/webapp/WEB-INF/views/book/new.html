@@ -21,6 +21,9 @@
   <div style="color:red" th:if="${#fields.hasErrors('year')}" th:errors="*{year}">Year Error</div>
   <input type="submit" value="Create!"/>
 </form>
+<br/>
+<hr/>
+<a th:href="@{/book}" >Go to all books</a>
 
 </body>
 </html>

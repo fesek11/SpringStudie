@@ -5,19 +5,31 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import ua1.dao.BookDAO;
 import ua1.dao.PersonDAO;
+import ua1.models.Book;
 import ua1.models.Person;
+import ua1.util.PersonValidator;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @RequestMapping("/people")
 public class PeopleController {
-    @Autowired
     private PersonDAO personDAO;
+    private BookDAO bookDAO;
+    private final PersonValidator personValidator;
+
+    @Autowired
+    public PeopleController(PersonDAO personDAO, BookDAO bookDAO, PersonValidator personValidator) {
+        this.personDAO = personDAO;
+        this.bookDAO = bookDAO;
+        this.personValidator = personValidator;
+    }
 
     @GetMapping()
-    public String index(Model model) {
+    public String index(Model model, @ModelAttribute Person person) {
         model.addAttribute("people", personDAO.index());
         return "people/index";
     }
@@ -25,6 +37,12 @@ public class PeopleController {
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model) {
         model.addAttribute("person", personDAO.show(id));
+        List<Book> bookOwned = personDAO.getBookOwning(id);
+        personDAO.getBookOwning(id).isEmpty();
+        if (!bookOwned.isEmpty()) {
+            model.addAttribute("bookList", personDAO.getBookOwning(id));
+        }
+
         return "people/show";
     }
 
@@ -36,6 +54,7 @@ public class PeopleController {
 
     @PostMapping()
     public String create(@ModelAttribute("person") @Valid Person person, BindingResult bindingResult) {
+        personValidator.validate(person, bindingResult);
         if (bindingResult.hasErrors()) {
             return "people/new";
         }
@@ -55,7 +74,7 @@ public class PeopleController {
             return "people/edit";
         }
         personDAO.update(id, person);
-        return "redirect:/people";
+        return "redirect:/people/" + id;
     }
 
     @DeleteMapping("/{id}")

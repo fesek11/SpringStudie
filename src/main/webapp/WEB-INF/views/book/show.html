@@ -6,8 +6,12 @@
 </head>
 <body>
 <p th:text="${book.getFullName()}">VALUE</p>
-<a th:href="@{/book/{id}/edit(id=${book.getBook_id()})}">Edit</a>
+<a th:href="@{/book/edit/{id}(id=${book.getBook_id()})}">Edit</a>
+<!--<form th:method="PATCH" th:action="@{/book/{id}/edit(id=${book.getBook_id()})}">-->
+<!--    <input type="submit" value="Edit">-->
+<!--</form>-->
 
+<p th:unless="${owner}" th:text="'This book is free'">VALUE</p>
 <form th:method="PATCH" th:action="@{/book/appoint/{id}(id=${book.getBook_id()})}" th:unless="${owner}">
     <label for="person"> Choose person</label>
     <select th:object="${person}" th:field="*{id}" id="person">
@@ -17,12 +21,15 @@
     <input type="submit" value="Appoint book">
 </form>
 <form th:method="POST" th:action="@{/book/relies/{id}(id=${book.getBook_id()})}" th:if="${owner}">
-    <p th:text="${owner.getFullName()}">VALUE</p>
+    <p th:text="'Owner is '+${owner.getFullName()}">VALUE</p>
     <input type="submit" value="Relies book">
 </form>
 <form th:method="DELETE" th:action="@{/book/{id}(id=${book.getBook_id()})}">
     <input type="submit" value="Delete"/>
 </form>
+<br/>
+<hr/>
+<a th:href="@{/book}">Go to all books</a>
 
 </body>
 </html>

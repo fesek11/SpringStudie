@@ -57,7 +57,7 @@ public class BookController {
     @PostMapping("/relies/{id}")
     public String relies(@PathVariable("id") int id) {
         bookDAO.relies(id);
-        return "redirect:/book";
+        return "redirect:/book/"+id;
     }
 
     @DeleteMapping("/{id}")
@@ -66,16 +66,10 @@ public class BookController {
         return "redirect:/book";
     }
 
-    @GetMapping("/{id}/edit")
+    @GetMapping ("/edit/{id}")
     public String edit(Model model, @PathVariable("id") int id) {
         model.addAttribute("book", bookDAO.show(id));
         return "book/edit";
-    }
-
-    @PatchMapping("/appoint/{id}")
-    public String appoint(@ModelAttribute(value = "person") Person person, @PathVariable(value = "id") int id) {
-        bookDAO.appoint(id, person.getId());
-        return "redirect:/book/" + id;
     }
 
     @PatchMapping("/{id}")
@@ -85,6 +79,12 @@ public class BookController {
         }
         bookDAO.update(id, book);
         return "redirect:/book";
+    }
+
+    @PatchMapping("/appoint/{id}")
+    public String appoint(@ModelAttribute(value = "person") Person person, @PathVariable(value = "id") int id) {
+        bookDAO.appoint(id, person.getId());
+        return "redirect:/book/"+id;
     }
 
 }

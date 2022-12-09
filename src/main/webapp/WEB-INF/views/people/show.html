@@ -1,18 +1,26 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>Show</title>
+    <meta charset="UTF-8">
+    <title>Show</title>
 </head>
 <body>
 <p th:text="${person.getName()}">VALUE</p>
 <p th:text="${person.getId()}">VALUE</p>
-
-<p th:text="${'Email: ' + person.getEmail()}">VALUE</p>
 <a th:href="@{/people/{id}/edit(id=${person.getId()})}">Edit</a>
+<br/>
+<hr/>
+<div th:text="'The person is did not take any book yet'" th:unless="${bookList}">VALUE</div>
+<div th:each="book : ${bookList}" th:unless="${bookList.isEmpty()}">
+    <a th:text="${book.getName()}">user</a>
+</div>
 
+<br/>
+<hr/>
 <form th:method="DELETE" th:action="@{/people/{id}(id=${person.getId()})}">
-  <input type="submit" value="Delete"/>
+    <input type="submit" value="Delete"/>
 </form>
+<a th:href="@{/people}">Go to all people</a>
+
 </body>
 </html>
