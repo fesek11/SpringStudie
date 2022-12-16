@@ -1,50 +1,68 @@
 package ua1.dao;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import ua1.models.Book;
 import ua1.models.Person;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 @Component
 public class PersonDAO {
-    private final JdbcTemplate jdbcTemplate;
+    private final SessionFactory sessionFactory;
 
     @Autowired
-    public PersonDAO(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
+    public PersonDAO(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
 
+    @Transactional(readOnly = true)
     public List<Person> index() {
-        return jdbcTemplate.query("select * from public.person", new BeanPropertyRowMapper<>(Person.class));
+        Session session = sessionFactory.getCurrentSession();
+
+        List<Person> list = session.createQuery("select p from Person p", Person.class).getResultList();
+        return list;
     }
+
+    @Transactional(readOnly = true)
     public Optional<Person> getFullName(String name) {
-        return jdbcTemplate.query("select name from public.person where name = ?",new Object[]{name}, new BeanPropertyRowMapper<>(Person.class)).stream().findAny();
-    }
+        Session session = sessionFactory.getCurrentSession();
+        return Optional.ofNullable(session.createQuery("select p from Person p where p.name =: personName", Person.class)
+                .setParameter("personName", name).getSingleResult());
 
+    }
+    @Transactional(readOnly = true)
     public Person show(int id) {
-        return jdbcTemplate.query("select * from public.person where id=?", new Object[]{id}, new BeanPropertyRowMapper<>(Person.class)).stream().findAny().orElse(null);
-
+        Session session = sessionFactory.getCurrentSession();
+        return session.get(Person.class, id);
     }
 
+    @Transactional(readOnly = false)
     public void save(Person person) {
-        jdbcTemplate.update("insert into public.person(name, age) values(?, ?)", person.getName(), person.getAge());
+        Session session = sessionFactory.getCurrentSession();
+        session.save(person);
     }
-
+    @Transactional(readOnly = false)
     public void update(int id, Person person) {
-        jdbcTemplate.update("update public.person set name=?, age=? where id=? ", person.getName(), person.getAge(), id);
-
+        Session session = sessionFactory.getCurrentSession();
+        session.update(person);
     }
 
+    @Transactional(readOnly = false)
     public void delete(int id) {
-        jdbcTemplate.update("delete from public.person where id=?", id);
+        Session session = sessionFactory.getCurrentSession();
+        session.delete(session.get(Person.class, id));
     }
 
+    @Transactional(readOnly = true)
     public List<Book> getBookOwning(int id) {
-        return jdbcTemplate.query("SELECT name, author FROM public.book WHERE person_id = ?", new Object[]{id}, new BeanPropertyRowMapper<>(Book.class)).stream().toList();
+
+        return new ArrayList<>(Collections.singleton(new Book(23, "Test", "Test", 1902)));
     }
 }
