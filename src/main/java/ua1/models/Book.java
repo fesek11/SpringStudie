@@ -15,9 +15,9 @@ import javax.validation.constraints.Pattern;
 public class Book {
     private int book_id;
 
-    @Pattern(regexp = ".*", message = "Enter book name")
+//    @Pattern(regexp = ".*", message = "Enter book name")
     private String name;
-    @Pattern(regexp = "[A-Z]\\w+\\s[A-Z]\\w+\\s[A-Z]\\w+", message = "Enter author name surname and ???")
+//    @Pattern(regexp = "[A-Z]\\w+\\s[A-Z]\\w+\\s[A-Z]\\w+", message = "Enter author name surname and ???")
     private String author;
 
     @Min(value = 0, message = "Year should be greater than 0")

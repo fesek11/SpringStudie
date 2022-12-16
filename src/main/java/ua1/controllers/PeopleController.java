@@ -5,43 +5,35 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import ua1.dao.BookDAO;
-import ua1.dao.PersonDAO;
-import ua1.models.Book;
 import ua1.models.Person;
-import ua1.util.PersonValidator;
+import ua1.services.PeopleService;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @Controller
 @RequestMapping("/people")
 public class PeopleController {
-    private PersonDAO personDAO;
-    private BookDAO bookDAO;
-    private final PersonValidator personValidator;
-
+    private final PeopleService peopleService;
     @Autowired
-    public PeopleController(PersonDAO personDAO, BookDAO bookDAO, PersonValidator personValidator) {
-        this.personDAO = personDAO;
-        this.bookDAO = bookDAO;
-        this.personValidator = personValidator;
+    public PeopleController(PeopleService peopleService) {
+        this.peopleService = peopleService;
     }
 
     @GetMapping()
     public String index(Model model, @ModelAttribute Person person) {
-        model.addAttribute("people", personDAO.index());
+        model.addAttribute("people", peopleService.findAll());
         return "people/index";
     }
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model) {
-        model.addAttribute("person", personDAO.show(id));
-        List<Book> bookOwned = personDAO.getBookOwning(id);
-        personDAO.getBookOwning(id).isEmpty();
-        if (!bookOwned.isEmpty()) {
-            model.addAttribute("bookList", personDAO.getBookOwning(id));
-        }
+        model.addAttribute("person", peopleService.findOne(id));
+//        List<Book> bookOwned = peopleService.getBookOwning(id);
+//        if (!bookOwned.isEmpty()) {
+//            model.addAttribute("bookList", peopleService.getBookOwning(id));
+//        }
+            model.addAttribute("bookList", 4);
+
 
         return "people/show";
     }
@@ -54,17 +46,16 @@ public class PeopleController {
 
     @PostMapping()
     public String create(@ModelAttribute("person") @Valid Person person, BindingResult bindingResult) {
-        personValidator.validate(person, bindingResult);
         if (bindingResult.hasErrors()) {
             return "people/new";
         }
-        personDAO.save(person);
+        peopleService.save(person);
         return "redirect:/people";
     }
 
     @GetMapping("/{id}/edit")
     public String edit(Model model, @PathVariable("id") int id) {
-        model.addAttribute("person", personDAO.show(id));
+        model.addAttribute("person", peopleService.findOne(id));
         return "people/edit";
     }
 
@@ -73,13 +64,13 @@ public class PeopleController {
         if (bindingResult.hasErrors()) {
             return "people/edit";
         }
-        personDAO.update(id, person);
+        peopleService.update(id, person);
         return "redirect:/people/" + id;
     }
 
     @DeleteMapping("/{id}")
     public String delete(@PathVariable("id") int id) {
-        personDAO.delete(id);
+        peopleService.delete(id);
         return "redirect:/people";
     }
 

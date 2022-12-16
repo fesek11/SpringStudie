@@ -7,13 +7,14 @@
 <body>
 <p th:text="${person.getName()}">VALUE</p>
 <p th:text="${person.getId()}">VALUE</p>
+<p th:text="${person.getEmail()}">VALUE</p>
 <a th:href="@{/people/{id}/edit(id=${person.getId()})}">Edit</a>
 <br/>
 <hr/>
-<div th:text="'The person is did not take any book yet'" th:unless="${bookList}">VALUE</div>
+<!--<div th:text="'The person is did not take any book yet'" th:unless="${bookList}">VALUE</div>
 <div th:each="book : ${bookList}" th:unless="${bookList.isEmpty()}">
     <a th:text="${book.getName()}">user</a>
-</div>
+</div>-->
 
 <br/>
 <hr/>
