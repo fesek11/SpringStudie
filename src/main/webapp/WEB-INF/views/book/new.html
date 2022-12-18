@@ -18,7 +18,7 @@
   <br/>
   <label for="year">Enter year: </label>
   <input type="text" th:field="*{year}" id="year"/>
-  <div style="color:red" th:if="${#fields.hasErrors('year')}" th:errors="*{year}">Year Error</div>
+  <div style="color:red" th:if="${#fields.hasErrors('year')}" th:errors="*{year}">Year Error</div><br/>
   <input type="submit" value="Create!"/>
 </form>
 <br/>

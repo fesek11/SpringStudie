@@ -63,6 +63,6 @@ public class PersonDAO {
     @Transactional(readOnly = true)
     public List<Book> getBookOwning(int id) {
 
-        return new ArrayList<>(Collections.singleton(new Book(23, "Test", "Test", 1902)));
+        return new ArrayList<>(Collections.singleton(new Book( "Test", "Test", 1902)));
     }
 }
