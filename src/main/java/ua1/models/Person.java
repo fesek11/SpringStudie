@@ -4,7 +4,6 @@ package ua1.models;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.Type;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -29,7 +28,7 @@ public class Person {
     @NotEmpty(message = "Name should not be empty")
     @Size(min = 2, max = 30, message = "Name should be between 2 and 30 characters")
     @Column(name = "name")
-    private String name;
+    private String fullName;
 
     @Column(name = "age")
     @Min(value = 1, message = "Age should be greater than 1")
@@ -48,32 +47,26 @@ public class Person {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
 
-    @Transient
-    @Enumerated(EnumType.ORDINAL)
-    private Status status;
 
     @OneToMany(mappedBy = "owner")
     private List<Book> books;
 
-    public Person(int id, String name, int age, String email) {
+    public Person(int id, String fullName, int age, String email) {
         this.id = id;
-        this.name = name;
+        this.fullName = fullName;
         this.age = age;
         this.email = email;
     }
 
-    public Person(String name, int age, String email) {
-        this.name = name;
+    public Person(String fullName, int age, String email) {
+        this.fullName = fullName;
         this.age = age;
         this.email = email;
-    }
-
-    public String getFullName() {
-        return getName();
     }
 
     @Override
     public String toString() {
-        return "Person{" + "name='" + name + '\'' + ", age=" + age + ", email='" + email + '\'' + '}';
+        return "Person{" + "name='" + fullName + '\'' + ", age=" + age + ", email='" + email + '\'' + '}';
     }
+
 }

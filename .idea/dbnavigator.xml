@@ -29,15 +29,23 @@
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="f8542bc8-a124-48f2-98d1-ca6a301aadc9">
-      <console name="Connection" type="STANDARD" schema="information_schema" session="Main"><![CDATA[select * from public.book
+      <console name="Connection" type="STANDARD" schema="public" session="Main"><![CDATA[select * from public.book
 select * from public.person
 
-alter table person add column email varchar(100) unique
-update public.person set email= 'ddfda@gmail.com' where id= 4
-update public.person set email= 'aaazzz@gmail.com' where id= 3
+
+insert into book (
+    author,
+    "name",
+    "year")
+values (
+    'Oleg Shevchenko',
+    'tigr',
+    2007
+    )
+;
 
 
-select person0_.id as id1_0_, person0_.age as age2_0_, person0_.email as email3_0_, person0_.name as name4_0_ from Person person0_]]></console>
+alter table public.book add column took_at timestamp]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
@@ -46,6 +54,9 @@ select person0_.id as id1_0_, person0_.age as age2_0_, person0_.email as email3_
   <component name="DBNavigator.Project.DatabaseSessionManager">
     <connection id="f8542bc8-a124-48f2-98d1-ca6a301aadc9" />
     <connection id="c2f6a54e-55f5-4840-a2f6-486b9ef9d0f4" />
+  </component>
+  <component name="DBNavigator.Project.DatasetFilterManager">
+    <filter-actions connection-id="f8542bc8-a124-48f2-98d1-ca6a301aadc9" dataset="public.book" active-filter-id="" />
   </component>
   <component name="DBNavigator.Project.EditorStateManager">
     <last-used-providers />
@@ -89,7 +100,7 @@ select person0_.id as id1_0_, person0_.age as age2_0_, person0_.email as email3_
           <url-type value="DATABASE" />
           <host value="localhost" />
           <port value="5432" />
-          <database value="SpringApp" />
+          <database value="postgres" />
           <type value="USER_PASSWORD" />
           <user value="postgres" />
           <deprecated-pwd value="MTExMQ==" />

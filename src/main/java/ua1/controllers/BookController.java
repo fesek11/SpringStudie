@@ -11,6 +11,7 @@ import ua1.services.BookService;
 import ua1.services.PeopleService;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -26,10 +27,15 @@ public class BookController {
         this.peopleService = peopleService;
     }
 
-
     @GetMapping()
-    public String index(Model model) {
-        model.addAttribute("book", bookService.findAll());
+    public String index(Model model, @RequestParam(value = "page", required = false) Integer page,
+                        @RequestParam(value = "books_per_page", required = false) Integer booksPerPage,
+                        @RequestParam(value = "sort_by_year", required = false) boolean sortByYear) {
+        if (page == null || booksPerPage == null) {
+            model.addAttribute("book", bookService.findAll(sortByYear));
+        } else {
+            model.addAttribute("book", bookService.findWithPagination(page, booksPerPage, sortByYear));
+        }
         return "book/index";
     }
 
@@ -52,9 +58,9 @@ public class BookController {
     public String show(@PathVariable("id") int id, Model model, @ModelAttribute("person") Person person) {
         model.addAttribute("book", bookService.show(id));
 
-        Optional<Person> personOwner = bookService.getBookOwner(id);
-        if (personOwner.isPresent()) {
-            model.addAttribute("owner", personOwner.get());
+       Person personOwner = bookService.getBookOwner(id);
+        if (personOwner!=null) {
+            model.addAttribute("owner", personOwner);
         } else {
             model.addAttribute("people", peopleService.findAll());
         }
@@ -88,11 +94,21 @@ public class BookController {
         return "redirect:/book";
     }
 
-    @PatchMapping("/appoint/{id}")
+    @PatchMapping("/{id}/appoint")
     public String appoint(@ModelAttribute(value = "person") Person person, @PathVariable(value = "id") int id) {
-//        bookService.appoint(id, person);
-        bookService.appoint(id, person.getId());
+        bookService.appoint(id,person);
         return "redirect:/book/" + id;
     }
+
+    @PostMapping("/search")
+    public String searchWithKeyWord(Model model, @RequestParam("keyword") String keyword) {
+        model.addAttribute("book", bookService.search(keyword));
+        return "book/search";
+    }
+    @GetMapping("/search")
+    public String searchPage() {
+        return "book/search";
+    }
+
 
 }

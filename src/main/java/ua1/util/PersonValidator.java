@@ -22,7 +22,7 @@ public class PersonValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         Person person = (Person) target;
-        if (personDAO.getFullName(person.getName()).isPresent()) {
+        if (personDAO.getFullName(person.getFullName()).isPresent()) {
             errors.rejectValue("fullName", "", "Человек с таким ФИО уже существует");
         }
     }

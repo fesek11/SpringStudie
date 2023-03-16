@@ -5,23 +5,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import ua1.models.Book;
 import ua1.models.Person;
-import ua1.services.BookService;
 import ua1.services.PeopleService;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @Controller
 @RequestMapping("/people")
 public class PeopleController {
     private final PeopleService peopleService;
-    private final BookService bookService;
     @Autowired
-    public PeopleController(PeopleService peopleService, BookService bookService) {
+    public PeopleController(PeopleService peopleService) {
         this.peopleService = peopleService;
-        this.bookService = bookService;
     }
 
     @GetMapping()
@@ -34,12 +29,7 @@ public class PeopleController {
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model) {
         model.addAttribute("person", peopleService.findOne(id));
-        List<Book> bookOwned = peopleService.getBookOwning(id);
-        if (!bookOwned.isEmpty()) {
-            model.addAttribute("bookList", peopleService.getBookOwning(id));
-        }
-//            model.addAttribute("bookList", 4);
-
+        model.addAttribute("bookList", peopleService.getBookOwning(id));
 
         return "people/show";
     }

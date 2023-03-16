@@ -1,13 +1,11 @@
 package ua1.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -17,7 +15,7 @@ import javax.validation.constraints.Size;
 @Table(name = "book")
 public class Book {
     @Id
-    @Column(name = "book_id")
+    @Column(name = "book_id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int book_id;
     @Column(name = "name")
@@ -32,6 +30,13 @@ public class Book {
     @ManyToOne
     @JoinColumn(name = "person_id", referencedColumnName = "id")
     private Person owner;
+
+    @Column(name = "took_at")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date took_at;
+
+    @Transient
+    private Boolean expired;
 
     public Book(String name, String author, int year) {
         this.name = name;
@@ -49,4 +54,6 @@ public class Book {
     public String getFullName() {
         return getAuthor() + ", " + getName() + ", " + getYear();
     }
+
 }
+
